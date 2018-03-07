@@ -52,6 +52,7 @@ def main():
     vehicle = connect(connection_string, wait_ready=True)
 
 
+
     zed, image, zed_pose = initZed(30)
     index, time_prev, time_current, time_bias = 0,0,0,0
     key = ' '
@@ -61,7 +62,6 @@ def main():
             if index%3==0:
                 zed.get_position(zed_pose, sl.PyREFERENCE_FRAME.PyREFERENCE_FRAME_WORLD)
                 tx, ty, tz = getPos(zed_pose, core.PyTranslation())
-                print("Translation: Tx: {0}, Ty: {1}, Tz {2}\n".format(tx, ty, tz))
 
                 zed.retrieve_image(image, sl.PyVIEW.PyVIEW_LEFT)
                 img = image.get_data()[:,:,0:3]
@@ -70,20 +70,8 @@ def main():
                 cv2.imwrite('Data/'+str(index)+'.jpg', img)
 
                 time_prev, freq = getFreq(time_prev, zed.get_camera_timestamp())
-                print("dt: %.3f" % (freq))
-
-                print ("lati: %f" % (vehicle.location._lat))
-                print ("lon: %f" % (vehicle.location._lon))
-                print ("rel_alt: %f" % (vehicle.location._relative_alt))
-
-                print ("roll: %s" % ( vehicle.attitude.roll  ))
-                print ("pitch: %s" % ( vehicle.attitude.pitch  ))
-                print ("yaw: %s" % ( vehicle.attitude.yaw  ))
-
-                print ("pitchspeed: %s" % ( vehicle._pitchspeed  ))  # settable
-                print ("roll speed: %s" % ( vehicle._rollspeed  ))  # settable
-                print ("yawspeed: %s" % ( vehicle._yawspeed  ))  # settable
-                file.write("%f %f %f %f %f %f %f %f %f %f\n" % (1/freq,
+                file.write("%f %f %f %f %f %f %f %f %f %f %f %f %f\n" % (1/freq,
+                                                              tx,ty,tz,
                                                               vehicle.location._lat, vehicle.location._lon, vehicle.location._relative_alt,
                                                               vehicle.attitude.roll, vehicle.attitude.pitch, vehicle.attitude.yaw,
                                                               vehicle._pitchspeed, vehicle._rollspeed, vehicle._yawspeed))
