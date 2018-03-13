@@ -22,7 +22,7 @@ def initZed(fps):
     err = zed.open(init_params)
     if err != tp.PyERROR_CODE.PySUCCESS:
         exit(1)
-
+    
     # Enable positional tracking with default parameters
     py_transform = core.PyTransform()  # First create a PyTransform object for PyTrackingParameters object
     tracking_parameters = zcam.PyTrackingParameters(init_pos=py_transform)

@@ -13,8 +13,8 @@ sudo pip3 install dronekit
 sudo pip3 install dronekit-sitl
 
 
-install pymav manually(newr version)
-
+#install pymav manually(newr version)
+cd ..
 git clone --recursive https://github.com/ArduPilot/mavlink
 cd mavlink/pymavlink
 
