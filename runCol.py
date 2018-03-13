@@ -51,8 +51,6 @@ def main():
     print("Connecting to vehicle on: %s" % (connection_string))
     vehicle = connect(connection_string, wait_ready=True)
 
-
-
     zed, image, zed_pose = initZed(30)
     index, time_prev, time_current, time_bias = 0,0,0,0
     key = ' '
