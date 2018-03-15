@@ -15,7 +15,7 @@ sudo pip3 install dronekit-sitl
 
 #install pymav manually(newr version)
 cd ..
-git clone --recursive https://github.com/ArduPilot/mavlink
+git clone --recursive https://github.com/ElliotHYLee/mavlink
 cd mavlink/pymavlink
 
 sudo apt-get install libxml2-dev libxslt-dev python-dev
@@ -23,5 +23,16 @@ sudo pip2 install -U future lxml
 sudo pip3 install -U future lxml
 
 sudo python2 setup.py install
+sudo python3 setup.py install
+
+# install dronekit
+cd ../..
+git clone --recursive https://github.com/ElliotHYLee/dronekit-python
+cd dronekit-python
+
+sudo python2 setup.py build
+sudo python2 setup.py install
+
+sudo python3 setup.py build
 sudo python3 setup.py install
 

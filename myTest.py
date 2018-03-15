@@ -21,7 +21,6 @@ for i in range(0,10):
     print ("yawspeed: %s" % ( vehicle._yawspeed  ))  # settable
     time.sleep(1/30)
 
-
 # Close vehicle object before exiting script
 vehicle.close()
 
