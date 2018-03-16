@@ -54,7 +54,7 @@ def main():
     zed, image, zed_pose = initZed(30)
     index, time_prev, time_current, time_bias = 0,0,0,0
     key = ' '
-    file = open("Data/data.txt", "w")
+    file = open("Data/0_data.txt", "w")
     while key != 113:
         if zed.grab(zcam.PyRuntimeParameters()) == tp.PyERROR_CODE.PySUCCESS:
             if index%3==0:
