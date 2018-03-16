@@ -4,7 +4,7 @@ import pyzed.types as tp
 import pyzed.core as core
 import cv2
 from dronekit import connect, VehicleMode
-
+from my_vehicle import MyVehicle
 
 def initZed(fps):
     # Create a PyZEDCamera object
@@ -22,7 +22,7 @@ def initZed(fps):
     err = zed.open(init_params)
     if err != tp.PyERROR_CODE.PySUCCESS:
         exit(1)
-    
+
     # Enable positional tracking with default parameters
     py_transform = core.PyTransform()  # First create a PyTransform object for PyTrackingParameters object
     tracking_parameters = zcam.PyTrackingParameters(init_pos=py_transform)
@@ -49,7 +49,7 @@ def getPos(zed_pose, py_translation):
 def main():
     connection_string = '/dev/ttyACM0'
     print("Connecting to vehicle on: %s" % (connection_string))
-    vehicle = connect(connection_string, wait_ready=True)
+    vehicle = connect(connection_string, wait_ready=True, vehicle_class=MyVehicle)
 
     zed, image, zed_pose = initZed(30)
     index, time_prev, time_current, time_bias = 0,0,0,0
@@ -68,11 +68,15 @@ def main():
                 cv2.imwrite('Data/'+str(index)+'.jpg', img)
 
                 time_prev, freq = getFreq(time_prev, zed.get_camera_timestamp())
-                file.write("%f %f %f %f %f %f %f %f %f %f %f %f %f\n" % (1/freq,
-                                                              tx,ty,tz,
-                                                              vehicle.location._lat, vehicle.location._lon, vehicle.location._relative_alt,
-                                                              vehicle.attitude.roll, vehicle.attitude.pitch, vehicle.attitude.yaw,
-                                                              vehicle._pitchspeed, vehicle._rollspeed, vehicle._yawspeed))
+                file.write("%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f\n" %
+                    (1/freq,
+                    tx,ty,tz,
+                    vehicle.location._lat, vehicle.location._lon, vehicle.location._relative_alt,
+                    vehicle.attitude.roll, vehicle.attitude.pitch, vehicle.attitude.yaw,
+                    vehicle._pitchspeed, vehicle._rollspeed, vehicle._yawspeed,
+                    vehicle.raw_imu.xacc, vehicle.raw_imu.yacc, vehicle.raw_imu.zacc,
+                    vehicle.raw_imu.xgyro, vehicle.raw_imu.ygyro, vehicle.raw_imu.zgyro,
+                    vehicle.raw_imu.xmag, vehicle.raw_imu.ymag, vehicle.raw_imu.zmag))
             index +=1
 
     cv2.destroyAllWindows()

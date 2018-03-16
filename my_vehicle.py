@@ -60,7 +60,7 @@ class MyVehicle(Vehicle):
         self._raw_imu = RawIMU()
 
         # Create a message listener using the decorator.
-        @self.on_message('RAW_IMU')
+        @self.on_message('HIGHRES_IMU')
         def listener(self, name, message):
             """
             The listener is called for messages that contain the string specified in the decorator,
@@ -69,7 +69,7 @@ class MyVehicle(Vehicle):
             The listener writes the message to the (newly attached) ``vehicle.raw_imu`` object
             and notifies observers.
             """
-            print ("imu arrives")
+            #print ("imu arrives")
             self._raw_imu.time_boot_us=message.time_usec
             self._raw_imu.xacc=message.xacc
             self._raw_imu.yacc=message.yacc
@@ -82,8 +82,7 @@ class MyVehicle(Vehicle):
             self._raw_imu.zmag=message.zmag
 
             # Notify all observers of new message (with new value)
-            #   Note that argument `cache=False` by default so listeners
-            #   are updated with every new message
+            # Note that argument `cache=False` by default so listeners are updated with every new message
             self.notify_attribute_listeners('raw_imu', self._raw_imu)
 
     @property
