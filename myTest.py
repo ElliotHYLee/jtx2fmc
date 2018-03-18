@@ -1,6 +1,6 @@
 import time
 from dronekit import connect, VehicleMode
-connection_string = '/dev/ttyACM0'
+connection_string = '/dev/ttyACM1'
 
 #Connect to the Vehicle.
 print("Connecting to vehicle on: %s" % (connection_string))
