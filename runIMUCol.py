@@ -3,6 +3,7 @@ from my_vehicle import MyVehicle
 from time import sleep
 import cv2
 import numpy as np
+
 def getFreq(time_prev, timestamp ):
     time_current = timestamp  # Get the timestamp at the time the image was captured
     freq = 1.0*10**9/(time_current - time_prev)
@@ -25,10 +26,10 @@ def main():
     DIFF_us = 10**6/10
     cv2.namedWindow('dd')
     print ("calculating g_acc")
-    for i in range(0,5000):
+    for i in range(0,150):
         acc_bias = acc_bias + np.array([vehicle.raw_imu.xacc, vehicle.raw_imu.yacc, vehicle.raw_imu.zacc])
-
-    acc_bias /= 5000
+        sleep(0.03)
+    acc_bias /= 150
     file.write("%.4f %.4f %.4f \n" %(acc_bias[0], acc_bias[1], acc_bias[2]))
     file.close()
     print ("acc_bias: ")
