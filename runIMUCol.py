@@ -71,8 +71,6 @@ def main():
             index +=1
 
         #print (index)
-
-
     cv2.destroyAllWindows()
     file.close()
 
