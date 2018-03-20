@@ -34,7 +34,9 @@ def main():
     file.close()
     print ("acc_bias: ")
     print (acc_bias)
-
+    print (vehicle.raw_imu.xmag)
+    print (vehicle.raw_imu.ymag)
+    print (vehicle.raw_imu.zmag)
     gpsFlag = 1
     cnt = 0
     file = open("Data/0_data.txt", "w")
@@ -52,15 +54,26 @@ def main():
             else:
                 flag = 0
             if (index > 0):
-                file.write("%s %s %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f\n" %
+                gps_lat = vehicle.location._lat
+                print (gps_lat)
+                # file.write("%s %s %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f\n" %
+                #             # (1/freq,
+                #             (flag, diff_us,
+                #             vehicle.location._lat, vehicle.location._lon, vehicle.location._relative_alt,
+                #             vehicle.attitude.roll, vehicle.attitude.pitch, vehicle.attitude.yaw,
+                #             vehicle._pitchspeed, vehicle._rollspeed, vehicle._yawspeed,
+                #             accum_acc[0]/index, accum_acc[1]/index, accum_acc[2]/index,
+                #             vehicle.raw_imu.xgyro, vehicle.raw_imu.ygyro, vehicle.raw_imu.zgyro,
+                #             vehicle.raw_imu.xmag, vehicle.raw_imu.ymag, vehicle.raw_imu.zmag))
+                file.write("%s %s %s %s %s\n" %
                             # (1/freq,
                             (flag, diff_us,
-                            vehicle.location._lat, vehicle.location._lon, vehicle.location._relative_alt,
-                            vehicle.attitude.roll, vehicle.attitude.pitch, vehicle.attitude.yaw,
-                            vehicle._pitchspeed, vehicle._rollspeed, vehicle._yawspeed,
-                            accum_acc[0]/index, accum_acc[1]/index, accum_acc[2]/index,
-                            vehicle.raw_imu.xgyro, vehicle.raw_imu.ygyro, vehicle.raw_imu.zgyro,
-                            vehicle.raw_imu.xmag, vehicle.raw_imu.ymag, vehicle.raw_imu.zmag))
+                            vehicle.location._lat, vehicle.location._lon, vehicle.location._relative_alt))
+                            # vehicle.attitude.roll, vehicle.attitude.pitch, vehicle.attitude.yaw,
+                            # vehicle._pitchspeed, vehicle._rollspeed, vehicle._yawspeed,
+                            # accum_acc[0]/index, accum_acc[1]/index, accum_acc[2]/index,
+                            # vehicle.raw_imu.xgyro, vehicle.raw_imu.ygyro, vehicle.raw_imu.zgyro,
+                            # vehicle.raw_imu.xmag, vehicle.raw_imu.ymag, vehicle.raw_imu.zmag))
             prev_gps = current_gps
             index = 0
             accum_acc = np.array([0,0,0])
